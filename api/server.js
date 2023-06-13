@@ -5,7 +5,7 @@ const server = express();
 // 🟢 server'ın istekleri json formatında desteklemesi için; 
 server.use(express.json());
 
-// 🟢 posts router'ını buraya require edin ve bağlayın
+// 🟢 posts router'ını buraya require edin ve bağlayın. express.json'ın altında olması gerekiyor mutlaka!
 const postRouter = require("./posts/posts-router");
 server.use("/api/posts", postRouter);
 
