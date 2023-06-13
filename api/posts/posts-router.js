@@ -100,5 +100,21 @@ router.delete("/:id/comments", async (req, res) => {
     }
 });
 
+// 🟢 GET DATA WITH A COMMENT /ilgili comment'teki data: 
+
+router.get("/:id/comments", async (req, res) => {
+    try {
+        const post = await postsModel.findById(req.params.id);
+        if (!post) {
+            res.status(404).json({ message: "Belirtilen ID'li gönderi bulunamadı" })
+        } else {
+            const comments = await postsModel.findPostComments(req.params.id);
+            res.json(comments);
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Yorumlar bilgisi getirilemedi" });
+    }
+});
+
 // 🟢 router'ı dışarı çıkarıyoruz
 module.exports = router;
