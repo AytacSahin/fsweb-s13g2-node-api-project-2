@@ -46,6 +46,8 @@ router.post("/", async (req, res) => {
     }
 });
 
+// 🟢 UPDATE DATA WITH AN ID : 
+
 router.put("/:id", async (req, res) => {
     try {
         const post = await postsModel.findById(req.params.id);
@@ -66,6 +68,37 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+// 🟢 DELETE DATA WITH AN ID / uniq id'li datayı siliyoruz: 
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const post = await postsModel.findById(req.params.id);
+        if (!post) {
+            res.status(404).json({ message: "Belirtilen ID'li gönderi bulunamadı" })
+        } else {
+            await postsModel.remove(req.params.id);
+            res.json(post);
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Gönderi silinemedi" });
+    }
+});
+
+// 🟢 DELETE DATA WITH AN ID / uniq id'li datayı siliyoruz: 
+
+router.delete("/:id/comments", async (req, res) => {
+    try {
+        const post = await postsModel.findById(req.params.id);
+        if (!post) {
+            res.status(404).json({ message: "Belirtilen ID'li gönderi bulunamadı" })
+        } else {
+            await postsModel.remove(req.params.id);
+            res.json(post);
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Gönderi silinemedi" });
+    }
+});
 
 // 🟢 router'ı dışarı çıkarıyoruz
 module.exports = router;
